@@ -6,9 +6,11 @@ import Login from './pages/Login';
 const App = () => {
   return (
     <Router>
-      <Route path='/' element={<Home />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/login' element={<Login />} />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+      </Routes>
     </Router>
   );
 }
