@@ -2,13 +2,18 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import { GrFormView } from 'react-icons/gr';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../features/auth/authSlice';
 import * as Yup from 'yup';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { isError, message, isSuccess } = useSelector(state => state.auth);
+
+    const [visible, setVisible] = useState(true);
 
     const formik = useFormik({
         initialValues: {
@@ -28,8 +33,6 @@ const Login = () => {
             }
 
             dispatch(loginUser(userData));
-            resetForm({ values: '' });
-            navigate('/');
         }
     })
 
@@ -81,6 +84,14 @@ const Login = () => {
                                     Login
                                 </button>
                             </div>
+                            {isError &&
+                                <div>
+                                    <button className={`relative block mx-auto cursor-default mt-3 px-12 py-2 bg-red-800 font-bold text-white ${visible ? "" : "hidden"}`}>
+                                        {message}
+                                        <AiOutlineClose onClick={() => setVisible(false)} className='absolute cursor-pointer top-2 font-bold right-2' />
+                                    </button>
+                                </div>
+                            }
                             <div className="mt-6 text-grey-dark">
                                 <span className="mr-2">Don't have an account?</span>
                                 <Link to='/register' className="text-sky-600 hover:underline font-bold">
