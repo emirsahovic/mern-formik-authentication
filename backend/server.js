@@ -3,6 +3,7 @@ import colors from 'colors';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ const PORT = 5000 || process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use('/api/users', userRoutes);
 
 app.use(errorHandler);
 
